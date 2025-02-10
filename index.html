@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>QR Code Scanner</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-qrcode"></i>
+                <h2>QR Tool</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#scan" class="nav-item active" data-section="scan-section">
+                    <i class="fas fa-camera"></i>
+                    <span>Scan QR</span>
+                </a>
+                <a href="#upload" class="nav-item" data-section="upload-section">
+                    <i class="fas fa-upload"></i>
+                    <span>Upload QR</span>
+                </a>
+                <a href="#create" class="nav-item" data-section="create-section">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Create QR</span>
+                </a>
+                <a href="#myqr" class="nav-item" data-section="myqr-section">
+                    <i class="fas fa-folder"></i>
+                    <span>My QR Codes</span>
+                </a>
+                <a href="#history" class="nav-item" data-section="history-section">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section id="scan-section" class="content-section active">
+                <div class="section-header">
+                    <h1>Scan QR Code</h1>
+                </div>
+                <div class="scanner-container">
+                    <div id="camera-permission" class="permission-overlay hidden">
+                        <i class="fas fa-camera"></i>
+                        <h3>Camera Access Required</h3>
+                        <p>Please allow camera access to scan QR codes</p>
+                        <button id="request-camera">Enable Camera</button>
+                    </div>
+                    <div id="reader"></div>
+                    <div id="result"></div>
+                </div>
+            </section>
+
+            <section id="upload-section" class="content-section">
+                <div class="section-header">
+                    <h1>Upload QR Code</h1>
+                </div>
+                <div class="upload-container">
+                    <label for="qr-input-file" class="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Drop QR code image or click to upload</span>
+                        <input type="file" id="qr-input-file" accept="image/*" hidden>
+                    </label>
+                </div>
+            </section>
+
+            <section id="create-section" class="content-section">
+                <div class="section-header">
+                    <h1>Create QR Code</h1>
+                </div>
+                <div class="create-container">
+                    <div class="qr-creator-panel">
+                        <div class="qr-type-selector">
+                            <h3>Select QR Type</h3>
+                            <div class="type-grid">
+                                <!-- Basic QR Types -->
+                                <div class="type-item" data-type="text">
+                                    <i class="fas fa-font"></i>
+                                    <span>Text</span>
+                                </div>
+                                <div class="type-item" data-type="url">
+                                    <i class="fas fa-link"></i>
+                                    <span>URL</span>
+                                </div>
+                                <!-- Social Media -->
+                                <div class="type-item" data-type="facebook">
+                                    <i class="fab fa-facebook"></i>
+                                    <span>Facebook</span>
+                                </div>
+                                <div class="type-item" data-type="instagram">
+                                    <i class="fab fa-instagram"></i>
+                                    <span>Instagram</span>
+                                </div>
+                                <div class="type-item" data-type="x">
+                                    <i class="fab fa-x-twitter"></i>
+                                    <span>X (Twitter)</span>
+                                </div>
+                                <div class="type-item" data-type="youtube">
+                                    <i class="fab fa-youtube"></i>
+                                    <span>YouTube</span>
+                                </div>
+                                <div class="type-item" data-type="whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>WhatsApp</span>
+                                </div>
+                                <div class="type-item" data-type="telegram">
+                                    <i class="fab fa-telegram"></i>
+                                    <span>Telegram</span>
+                                </div>
+                                <div class="type-item" data-type="tiktok">
+                                    <i class="fab fa-tiktok"></i>
+                                    <span>TikTok</span>
+                                </div>
+                                <div class="type-item" data-type="snapchat">
+                                    <i class="fab fa-snapchat"></i>
+                                    <span>Snapchat</span>
+                                </div>
+                                <div class="type-item" data-type="threads">
+                                    <i class="fab fa-threads"></i>
+                                    <span>Threads</span>
+                                </div>
+                                <!-- Streaming & Shopping -->
+                                <div class="type-item" data-type="netflix">
+                                    <i class="fab fa-netflix"></i>
+                                    <span>Netflix</span>
+                                </div>
+                                <div class="type-item" data-type="amazon">
+                                    <i class="fab fa-amazon"></i>
+                                    <span>Amazon</span>
+                                </div>
+                                <div class="type-item" data-type="pinterest">
+                                    <i class="fab fa-pinterest"></i>
+                                    <span>Pinterest</span>
+                                </div>
+                                <!-- Communication -->
+                                <div class="type-item" data-type="zoom">
+                                    <i class="fas fa-video"></i>
+                                    <span>Zoom</span>
+                                </div>
+                                <div class="type-item" data-type="viber">
+                                    <i class="fab fa-viber"></i>
+                                    <span>Viber</span>
+                                </div>
+                                <!-- AI & Games -->
+                                <div class="type-item" data-type="chatgpt">
+                                    <i class="fas fa-robot"></i>
+                                    <span>ChatGPT</span>
+                                </div>
+                                <div class="type-item" data-type="deepseek">
+                                    <i class="fas fa-brain"></i>
+                                    <span>DeepSeek</span>
+                                </div>
+                                <div class="type-item" data-type="freefire">
+                                    <i class="fas fa-gamepad"></i>
+                                    <span>FreeFire</span>
+                                </div>
+                                <div class="type-item" data-type="pubg">
+                                    <i class="fas fa-crosshairs"></i>
+                                    <span>PUBG</span>
+                                </div>
+                                <!-- Utility Types -->
+                                <div class="type-item" data-type="wifi">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Wi-Fi</span>
+                                </div>
+                                <div class="type-item" data-type="email">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>Email</span>
+                                </div>
+                                <div class="type-item" data-type="phone">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Phone</span>
+                                </div>
+                                <!-- Music Streaming -->
+                                <div class="type-item" data-type="youtube-music">
+                                    <i class="fab fa-youtube-square"></i>
+                                    <span>YouTube Music</span>
+                                </div>
+                                <div class="type-item" data-type="spotify">
+                                    <i class="fab fa-spotify"></i>
+                                    <span>Spotify</span>
+                                </div>
+                                
+                                <!-- Cryptocurrency -->
+                                <div class="type-item" data-type="bitcoin">
+                                    <i class="fab fa-bitcoin"></i>
+                                    <span>Bitcoin</span>
+                                </div>
+                                <div class="type-item" data-type="ethereum">
+                                    <i class="fab fa-ethereum"></i>
+                                    <span>Ethereum</span>
+                                </div>
+                                <div class="type-item" data-type="bnb">
+                                    <i class="fas fa-coins"></i>
+                                    <span>BNB</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qr-form-container">
+                            <div id="dynamic-form"></div>
+                            <div class="qr-actions">
+                                <button id="generate-qr" class="primary-btn">
+                                    <i class="fas fa-qrcode"></i> Generate QR
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qr-preview-panel">
+                        <div id="qr-preview"></div>
+                        <div class="preview-actions hidden">
+                            <div class="qr-actions-primary">
+                                <button id="download-qr" class="secondary-btn">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button id="save-qr" class="primary-btn">
+                                    <i class="fas fa-save"></i> Save
+                                </button>
+                            </div>
+                            <div class="share-buttons">
+                                <button class="share-btn" data-platform="facebook">
+                                    <i class="fab fa-facebook"></i>
+                                </button>
+                                <button class="share-btn" data-platform="twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </button>
+                                <button class="share-btn" data-platform="whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
+                                <button class="share-btn" data-platform="telegram">
+                                    <i class="fab fa-telegram"></i>
+                                </button>
+                                <button class="share-btn" data-platform="native">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="myqr-section" class="content-section">
+                <div class="section-header">
+                    <h1>My QR Codes</h1>
+                </div>
+                <div class="qr-grid" id="saved-qr-codes"></div>
+            </section>
+
+            <section id="history-section" class="content-section">
+                <div class="section-header">
+                    <h1>Scan History</h1>
+                    <button id="clear-history">
+                        <i class="fas fa-trash-alt"></i> Clear
+                    </button>
+                </div>
+                <div id="history-list"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- QR Detail Modal -->
+    <div id="qr-detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3><i class="fas fa-qrcode"></i> QR Code Details</h3>
+            <div class="qr-detail-container">
+                <div id="qr-display"></div>
+                <div class="qr-info">
+                    <h4>Scanned Content</h4>
+                    <p id="qr-text"></p>
+                    <p id="qr-timestamp" class="timestamp">
+                        <i class="far fa-calendar-alt"></i>
+                        <span></span>
+                    </p>
+                    <button id="copy-text" class="copy-btn">
+                        <i class="fas fa-copy"></i>
+                        <span>Copy Text</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Permission Modal -->
+    <div id="camera-permission-modal" class="modal">
+        <div class="modal-content permission-modal">
+            <div class="permission-content">
+                <i class="fas fa-camera"></i>
+                <h3>Camera Access Required</h3>
+                <p>This app needs access to your camera to scan QR codes.</p>
+                <div class="permission-steps">
+                    <h4>To enable camera access:</h4>
+                    <ol>
+                        <li>Click the "Enable Camera" button below</li>
+                        <li>When your browser prompts, click "Allow"</li>
+                        <li>If prompted, select your camera device</li>
+                    </ol>
+                </div>
+                <div class="permission-buttons">
+                    <button id="enable-camera" class="primary-btn">
+                        <i class="fas fa-camera"></i> Enable Camera
+                    </button>
+                    <button id="cancel-camera" class="secondary-btn">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p>Made with <i class="fas fa-heart"></i> by SagarParajuli</p>
+    </footer>
+    <script>
+        document.addEventListener('deviceready', onDeviceReady, false);
+        
+        function onDeviceReady() {
+            // App is ready to use
+            console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
