@@ -25,6 +25,8 @@ body {
     background-color: var(--background-color);
     padding: 20px;
     color: var(--text-color);
+    color: #306fc0cb;
+    animation: heartbeat 0 infinite;
 }
 
 .container {
@@ -249,7 +251,7 @@ h1 i, h2 i {
 .history-item button {
     padding: 8px 12px;
     background: var(--danger-color);
-    color: white;
+    color: rgb(9, 51, 143);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -280,7 +282,7 @@ h1 i, h2 i {
 #clear-history {
     padding: 10px 20px;
     background: var(--danger-color);
-    color: white;
+    color: rgb(42, 39, 224);
     border: none;
     border-radius: 8px;
     cursor: pointer;
