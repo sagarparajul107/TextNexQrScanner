@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Welcome to QR Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .welcome-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3498db;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .welcome-content {
+            max-width: 600px;
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-title {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .feature-list {
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .feature-item i {
+            margin-right: 1rem;
+            color: #3498db;
+        }
+
+        .get-started-btn {
+            background: #3498db;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .get-started-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .creator-credit {
+            margin-top: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .creator-credit i {
+            color: #e74c3c;
+            animation: heartbeat 0.1s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="logo-container">
+            <img src="textnexqrscanner.png" alt="QR Tool Logo" class="logo">
+            <h1 class="welcome-title">Welcome to TextNexQrScanner</h1>
+            <div class="creator-credit">
+                Made <i class="fas fa-heart"></i> by Sagar Parajuli
+            </div>
+        </div>
+        
+        <div class="welcome-content">
+            <h2>Your All-in-One QR Solution</h2>
+            <p>Discover the power of QR codes with our intuitive and feature-rich application.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i class="fas fa-camera"></i>
+                    <span>Scan QR codes instantly with your camera</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-qrcode"></i>
+                    <span>Create custom QR codes for various purposes</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-history"></i>
+                    <span>Track your scan history</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Share QR codes easily with others</span>
+                </div>
+            </div>
+
+            <a href="index.html" class="get-started-btn">
+                Get Started <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    <script>
+        // Check if this is the first visit
+        document.addEventListener('DOMContentLoaded', function() {
+            const hasVisited = localStorage.getItem('hasVisited');
+            // Only set hasVisited after user clicks "Get Started"
+            document.querySelector('.get-started-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.setItem('hasVisited', 'true');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>
