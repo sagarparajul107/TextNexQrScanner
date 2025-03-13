@@ -10,6 +10,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script>
+        // Check if first time visitor
+        if (!localStorage.getItem('hasVisited')) {
+            window.location.href = 'welcome.html';
+        }
+    </script>
 </head>
 <body>
     <div class="app-container">
@@ -45,7 +51,11 @@
         <main class="main-content">
             <section id="scan-section" class="content-section active">
                 <div class="section-header">
+                    <i class="fas fa-qrcode"></i>
                     <h1>Scan QR Code</h1>
+                    <div class="creator-credit">
+                        Made <i class="fas fa-heart"></i> by Sagar Parajuli
+                    </div>
                 </div>
                 <div class="scanner-container">
                     <div id="camera-permission" class="permission-overlay hidden">
@@ -316,7 +326,6 @@
     </div>
 
     <footer class="app-footer">
-        <p>Made with <i class="fas fa-heart"></i> by SagarParajuli</p>
     </footer>
     <script>
         document.addEventListener('deviceready', onDeviceReady, false);
